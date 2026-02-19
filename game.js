@@ -375,7 +375,7 @@ function create() {
   .setInteractive()
   .setScale(2)
   .setAlpha(0.7)
-  .setDepth(999)
+  .setDepth(10000)
   
   this.puedeInteractuar = true
   
@@ -389,7 +389,7 @@ function create() {
     .setInteractive()
     .setScale(2)
     .setAlpha(0.7)
-    .setDepth(999)
+    .setDepth(10000)
 
   this.btnGolpear.on("pointerdown", () => (this.btnGolpearDown = true))
   this.btnGolpear.on("pointerup", () => (this.btnGolpearDown = false))
@@ -500,24 +500,28 @@ function create() {
     .setInteractive()
     .setScale(2)
     .setAlpha(0.7)
-    .setScrollFactor(0);
+    .setScrollFactor(0)
+    .setDepth(10000)
   this.btnRight = this.add
     .image(150, 200, "btn_right")
     .setInteractive()
     .setScale(2)
     .setAlpha(0.7)
+    .setDepth(10000)
     .setScrollFactor(0);
   this.btnUp = this.add
     .image(120, 165, "btn_up")
     .setInteractive()
     .setScale(2)
     .setAlpha(0.7)
+    .setDepth(10000)
     .setScrollFactor(0);
   this.btnDown = this.add
     .image(120, 235, "btn_down")
     .setInteractive()
     .setScale(2)
     .setAlpha(0.7)
+    .setDepth(10000)
     .setScrollFactor(0);
 
   this.btnLeft.setDepth(9999);
