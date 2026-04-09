@@ -62,15 +62,9 @@ let textosCantidadInv = [];
 let SlotsInv = [];
 let slotsRecetas = [];
 
-let iconosSlotsInvMaleta = [];
-let textosCantidadInvMaleta = [];
-let SlotsInvMaleta = [];
-
 let ultimoGolpe = 0;
 
 let receta_a_craftear = "";
-
-let noche;
 
 const recetas = [
   {
@@ -290,7 +284,6 @@ function preload() {
   this.load.image("btn_down", "imagenes/btn_down_image.png");
   this.load.image("btn_left", "imagenes/btn_left_image.png");
   this.load.image("btn_right", "imagenes/btn_right_image.png");
-  this.load.image("btn_salir_panel", "imagenes/btn_salir_panel.png");
 
   this.load.image("btn_hit", "imagenes/btn_hit_image.png");
 
@@ -672,22 +665,22 @@ function create() {
   const height = this.scale.height;
 
   const text_user_stats = this.add
-    .text(width / 8, 50, "Estadisticas", { fontSize: "15px", color: "#fff" })
+    .text(width / 8, 50, "Estadisticas", { fontSize: "20px", color: "#fff" })
     .setOrigin(0.5)
     .setInteractive()
     .setScrollFactor(0);
   const text_user_inv = this.add
-    .text(width / 2.5, 50, "Inventario", { fontSize: "15px", color: "#fff" })
+    .text(width / 2.5, 50, "Inventario", { fontSize: "20px", color: "#fff" })
     .setOrigin(0.5)
     .setInteractive()
     .setScrollFactor(0);
   const text_user_todo = this.add
-    .text(width / 1.5, 50, "Por Hacer", { fontSize: "15px", color: "#fff" })
+    .text(width / 1.5, 50, "Por Hacer", { fontSize: "20px", color: "#fff" })
     .setOrigin(0.5)
     .setInteractive()
     .setScrollFactor(0);
   const text_user_confi = this.add
-    .text(width / 1.1, 50, "Configuración", { fontSize: "15px", color: "#fff" })
+    .text(width / 1.1, 50, "Configuración", { fontSize: "20px", color: "#fff" })
     .setOrigin(0.5)
     .setInteractive()
     .setScrollFactor(0);
@@ -702,8 +695,8 @@ function create() {
   panel_user_stats.fillRect(0, 80, width, height - 80);
 
   const text_stats_energia = this.add
-    .text(width / 2, 100, "Energia: " + this.energiaActual, {
-      fontSize: "12px",
+    .text(width / 2, height / 4, "Energia: " + this.energiaActual, {
+      fontSize: "20px",
       color: "#fff",
     })
     .setOrigin(0.5);
@@ -725,21 +718,20 @@ function create() {
 
   //INVENTARIO TITULO 1
   const titulo_inventario_personaje = this.add.text(
-    20,
+    80,
     100,
     "Inventario En Mano: ",
-    { fontSize: "10px", color: "#fff" },
+    { fontSize: "30px", color: "#fff" },
   );
 
   //INVENTARIO SLOTS PANEL
 
   for (let i = 0; i < inventarioStock; i++) {
     let inv_slot = this.add
-      .image(50 + (i + i) * 20, 150, "slot_image")
+      .image(100 + (i + i) * 36, 200, "slot_image")
       .setInteractive()
-      .setScale(1)
+      .setScale(3)
       .setDepth(10010)
-      .setAlpha(0.4)
       .setVisible(true);
 
     SlotsInv.push(inv_slot);
@@ -749,9 +741,9 @@ function create() {
 
   for (let i = 0; i < inventarioStock; i++) {
     let icon_slot_inv = this.add
-      .image(50 + (i + i) * 20, 150, "slot_image")
+      .image(100 + (i + i) * 36, 200, "slot_image")
       .setVisible(true)
-      .setScale(0.5)
+      .setScale(1.3)
       .setDepth(10000);
 
     iconosSlotsInv.push(icon_slot_inv);
@@ -759,8 +751,8 @@ function create() {
 
   for (let i = 0; i < inventarioStock; i++) {
     let txt_slot_inv = this.add
-      .text(52 + (i + i) * 20, 150, "0", {
-        fontSize: "10px",
+      .text(111 + (i + i) * 36, 200, "0", {
+        fontSize: "15px",
         color: "#ffffff",
         stroke: "#000000",
         strokeThickness: 4,
@@ -773,61 +765,43 @@ function create() {
 
   //INVENTARIO TITULO 2
   const titulo_inventario_maleta = this.add.text(
-    20,
-    170,
+    80,
+    300,
     "Inventario En Maleta: ",
-    { fontSize: "10px", color: "#fff" },
+    { fontSize: "30px", color: "#fff" },
   );
-
-  //INVENTARIO BTN PARA MOVER ITEM DE MALETA A MANO Y VICEVERSA
-  const btn_mover_item_a_mano = this.add
-    .text(0, 0, "Mover", {
-      fontSize: "10px",
-      color: "#ffffff",
-      backgroundColor: "#000000",
-      padding: {x:5, y:3}
-    })
-    .setDepth(10015)
-    .setVisible(false);
-
-    this.input.on("gameobjectdown", (pointer, gameObject) => {
-  console.log("CLICK GLOBAL:", gameObject);
-});
 
   //INVENTARIO MALETA
 
   for (let j = 0; j < 3; j++) {
+    console.log("hola")
     for (let i = 0; i < inventarioStock; i++) {
       let inv_slot = this.add
-        .image(50 + (i + i) * 20, 200 + j * 20, "slot_image")
-        .setScale(1)
-        .setDepth(10000)
+        .image(100 + (i + i) * 36, 380 + (j*80), "slot_image")
+        .setInteractive()
+        .setScale(3)
+        .setDepth(10010)
         .setVisible(true);
 
-      SlotsInvMaleta.push(inv_slot);
+      SlotsInv.push(inv_slot);
     }
+
+    //ICONOS EN INVENTARIO
 
     for (let i = 0; i < inventarioStock; i++) {
       let icon_slot_inv = this.add
-        .image(50 + (i + i) * 20, 200 + j * 20, "slot_image")
+        .image(100 + (i + i) * 36, 380 + (j*80), "slot_image")
         .setVisible(true)
-        .setScale(0.5)
-        .setInteractive()
-        .setDepth(10009);
+        .setScale(1.3)
+        .setDepth(10000);
 
-        icon_slot_inv.on("pointerdown", (pointer) => {
-          console.log(pointer.x + " " + pointer.y)
-          btn_mover_item_a_mano.setPosition(pointer.x, pointer.y);
-          btn_mover_item_a_mano.setVisible(true);
-        });
-
-      iconosSlotsInvMaleta.push(icon_slot_inv);
+      iconosSlotsInv.push(icon_slot_inv);
     }
 
     for (let i = 0; i < inventarioStock; i++) {
       let txt_slot_inv = this.add
-        .text(55 + (i + i) * 20, 200 + j * 20, "", {
-          fontSize: "10px",
+        .text(111 + (i + i) * 36, 380 + (j*80), "0", {
+          fontSize: "15px",
           color: "#ffffff",
           stroke: "#000000",
           strokeThickness: 4,
@@ -835,7 +809,7 @@ function create() {
         .setDepth(10000)
         .setVisible(true);
 
-      textosCantidadInvMaleta.push(txt_slot_inv);
+      textosCantidadInv.push(txt_slot_inv);
     }
   }
 
@@ -850,16 +824,16 @@ function create() {
   panel_info_craft.fillRect(width / 2, 80, width / 2, height / 3);
 
   const slot_craft_info = this.add
-    .image(width / 2 + 50, 100, "slot_image")
-    .setScale(2);
+    .image(width / 2 + 100, 200, "slot_image")
+    .setScale(5);
   const icon_craft_info = this.add
-    .image(width / 2 + 50, 100, "slot_image")
-    .setScale(1)
+    .image(width / 2 + 100, 200, "slot_image")
+    .setScale(1.5)
     .setVisible(false);
 
   const titulo_craft_info = this.add.text(
-    width / 2 + 90,
-    80,
+    width / 2 + 170,
+    150,
     "Item a Craftear",
     {
       fontSize: "20px",
@@ -870,9 +844,9 @@ function create() {
   );
 
   const text_craft_info = this.add.text(
-    width / 2 + 100,
-    100,
-    "Ingredientes: ",
+    width / 2 + 170,
+    190,
+    "Presiona lo que quieres craftear,\n te daremos informacion sobre el objeto",
     {
       fontSize: "12px",
       color: "#ffffff",
@@ -882,8 +856,8 @@ function create() {
   );
 
   const btn_craftear_item = this.add
-    .text(width - 90, 120, "Craftear", {
-      fontSize: "12px",
+    .text(width - 100, 200, "Craftear", {
+      fontSize: "15px",
       color: "#ffffff",
       stroke: "#000000",
       strokeThickness: 4,
@@ -907,21 +881,17 @@ function create() {
     ...SlotsInv,
     ...iconosSlotsInv,
     ...textosCantidadInv,
-    ...SlotsInvMaleta,
-    ...iconosSlotsInvMaleta,
-    ...textosCantidadInvMaleta,
     titulo_inventario_personaje,
     titulo_inventario_maleta,
-    btn_mover_item_a_mano,
   ]);
 
   recetas.forEach((receta, i) => {
     let slotReceta = this.add
-      .image(width / 2 + (50 + (i + i) * 36), 190, "slot_image")
-      .setScale(1);
+      .image(width / 2 + (50 + (i + i) * 36), height / 2, "slot_image")
+      .setScale(3);
     let iconReceta = this.add
-      .image(width / 2 + (50 + (i + i) * 36), 190, receta.icon)
-      .setScale(0.5)
+      .image(width / 2 + (50 + (i + i) * 36), height / 2, receta.icon)
+      .setScale(1)
       .setInteractive()
       .setScrollFactor(0);
 
@@ -993,7 +963,7 @@ function create() {
   });
 
   this.btn_salir_panel = this.add
-    .image(window.innerWidth - 20, 20, "btn_salir_panel")
+    .image(window.innerWidth - 30, 30, "btn_salir_panel")
     .setInteractive()
     .setDepth(10002)
     .setScrollFactor(0)
@@ -1006,20 +976,9 @@ function create() {
   window.addEventListener("resize", () => {
     game.scale.resize(window.innerWidth, window.innerHeight);
   });
-
-  this.lights.enable();
-  this.lights.setAmbientColor(0x222222);
-
-  noche = this.add
-    .rectangle(0, 0, width, height, 0x000000)
-    .setOrigin(0)
-    .setDepth(10010)
-    .setScrollFactor(0)
-    .setAlpha(0.3)
-    .disableInteractive();
 }
 
-function update(time, delta) {
+function update() {
   let moving = false;
   player.setVelocity(0);
 
@@ -1115,10 +1074,10 @@ function update(time, delta) {
             arbol.x += 61;
             this.time.delayedCall(1600, () => {
               arbol.destroy();
-              guardarEnInventario("madera", "recurso", 3, "icon_madera");
-              guardarEnInventario("hoja", "recurso", 3, "icon_hoja");
+              guardarEnInventario("madera", "recurso", 5, "icon_madera");
+              guardarEnInventario("hoja", "recurso", 5, "icon_hoja");
               actualizarIconosInventario();
-              actualizarIconosPanel();
+              actualizarIconosPanel;
             });
           }
         }
@@ -1185,7 +1144,4 @@ function update(time, delta) {
     this.panelUserContainer.setVisible(false);
     this.btn_salir_panel.setVisible(false);
   }
-
-  let intensidad = (Math.sin(time * 0.0000000002) + 1) / 2;
-  noche.setAlpha(intensidad * 0.7);
 }
